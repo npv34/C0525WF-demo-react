@@ -1,13 +1,16 @@
 import './App.css'
 import HeaderTop from "./components/HeaderTop";
-import Message from "./components/Message";
+import UserList from "./components/Users/UserList";
+import Container from "react-bootstrap/Container";
 
 function App() {
 
   return (
     <>
         <HeaderTop title={"Eshop"}/>
-        <Message text={"Day la noi dung message"}/>
+        <Container>
+            <UserList/>
+        </Container>
     </>
   )
 }
