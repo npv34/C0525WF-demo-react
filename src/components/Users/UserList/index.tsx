@@ -1,41 +1,66 @@
-import {useState} from "react";
-import {Button, Card, Table} from "react-bootstrap";
+import {useEffect, useState} from "react";
+import {Button, Card, Col, Row, Table} from "react-bootstrap";
 import { v4 as uuidv4 } from 'uuid';
+import InputSearch from "../../InputSearch";
+
+const data =[
+    {
+        id: 1,
+        name: "Nguyen Van Teo",
+        age: 30,
+        email: "a@gmail.com"
+    },
+    {
+        id: 2,
+        name: "Nguyen Van Bao",
+        age: 25,
+        email: "b@gmail.com"
+    },
+    {
+        id: 3,
+        name: "Nguyen Van Bao Loc",
+        age: 28,
+        email: "c@gmail.com"
+    }
+]
 
 function UserList() {
-    const [users, setUsers] = useState([
-        {
-            id: 1,
-            name: "Nguyen Van A",
-            age: 30,
-            email: "a@gmail.com"
-        },
-        {
-            id: 2,
-            name: "Nguyen Van B",
-            age: 25,
-            email: "b@gmail.com"
-        },
-        {
-            id: 3,
-            name: "Nguyen Van C",
-            age: 28,
-            email: "c@gmail.com"
-        }
-    ])
+    const [users, setUsers] = useState(data);
+    const [userFilter, setUserFilter] = useState(data);
+    const [showInputSearch, setShowInputSearch] = useState(false);
 
     const handleDelete = (id: number) => {
         if (!window.confirm("Are you sure to delete?")) {
             return;
         }
         const newUser = users.filter(user => user.id !== id);
-        setUsers(newUser);
+        setUserFilter(newUser);
+    }
+
+    const searchUser = (keyword: string) => {
+        if (keyword){
+            const newUser = users.filter(user => user.name.toLowerCase().includes(keyword.toLowerCase()));
+            setUserFilter(newUser);
+        } else {
+            setUserFilter(data);
+        }
     }
 
     return (
         <>
             <Card className={"mt-2"}>
-                <Card.Header>User List</Card.Header>
+                <Card.Header>
+                    <Row>
+                        <Col xs={6}><h4>User List</h4></Col>
+                        <Col xs={6}>
+                            <Button onClick={() => setShowInputSearch(!showInputSearch)}>Show inputSearch</Button>
+                            { showInputSearch && (
+                                <InputSearch search={searchUser}/>
+                            )}
+                        </Col>
+                    </Row>
+
+                </Card.Header>
                 <Card.Body>
                     <Table striped bordered hover>
                         <thead>
@@ -48,7 +73,7 @@ function UserList() {
                         </tr>
                         </thead>
                         <tbody>
-                        { users.map((user, index) => (
+                        { userFilter.map((user, index) => (
                             <tr key={uuidv4()}>
                                 <td>{ index + 1}</td>
                                 <td>{user.name}</td>
