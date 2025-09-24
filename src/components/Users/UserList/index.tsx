@@ -2,6 +2,7 @@ import {useState} from "react";
 import {Button, Card, Col, Row, Table} from "react-bootstrap";
 import { v4 as uuidv4 } from 'uuid';
 import InputSearch from "../../InputSearch";
+import {Link} from "react-router";
 
 const data =[
     {
@@ -51,7 +52,12 @@ function UserList() {
             <Card className={"mt-2"}>
                 <Card.Header>
                     <Row>
-                        <Col xs={6}><h4>User List</h4></Col>
+                        <Col xs={6}>
+                            <h4>User List</h4>
+                            <Link to={"/admin/users/create"}>
+                                <Button>Create</Button>
+                            </Link>
+                        </Col>
                         <Col xs={6}>
                             <Button onClick={() => setShowInputSearch(!showInputSearch)}>Show inputSearch</Button>
                             { showInputSearch && (
@@ -81,6 +87,9 @@ function UserList() {
                                 <td>{user.email}</td>
                                 <td>
                                     <Button onClick={() => handleDelete(user.id)} className={"btn btn-danger"}>Delete</Button>
+                                    <Link to={`/admin/users/${user.id}/edit`}>
+                                        <Button className={"btn btn-primary ms-2"}>Edit</Button>
+                                    </Link>
                                 </td>
                             </tr>
                         ))}

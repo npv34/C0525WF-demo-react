@@ -2,6 +2,7 @@ import {Button, Card, Col} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
+import {Link} from "react-router";
 const loginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email')
         .required('Required'),
@@ -63,6 +64,7 @@ function Login() {
                             <Button  variant="primary" type="submit">
                                 Login
                             </Button>
+                            <Link to={"/register"} className={"btn ms-2"}>Register</Link>
                         </Form>
                     </Card.Body>
 
